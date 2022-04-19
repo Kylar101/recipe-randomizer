@@ -5,7 +5,9 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "db:push": "prisma db push --schema=\"./libs/prisma-clients/recipe/prisma/schema.prisma\"",
+    "db:generate": "prisma generate --schema=\"./libs/prisma-clients/recipe/prisma/schema.prisma\""
   },
   "private": true,
   "dependencies": {

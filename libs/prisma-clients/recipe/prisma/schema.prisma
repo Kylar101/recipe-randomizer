@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/recipe-client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("RECIPE_SOURCE_URL")
+}
+
+model User {
+  id Int @id
+}
+
+model Recipe {
+  id          Int          @id
+  name        String
+  prepTime    String
+  cookTime    String
+  ingredients Ingredient[]
+}
+
+model IngredientAmount {
+  id           Int          @id
+  amount       String
+  recipeId     Int
+  ingredientId Int
+  Ingredient   Ingredient[]
+}
+
+model Ingredient {
+  id                 Int              @id
+  recipeId           Int
+  amount             IngredientAmount @relation(fields: [ingredientAmountId], references: [id])
+  name               String
+  Recipe             Recipe           @relation(fields: [recipeId], references: [id])
+  ingredientAmountId Int
+}
