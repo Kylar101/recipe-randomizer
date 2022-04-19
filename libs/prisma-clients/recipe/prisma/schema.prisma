@@ -13,15 +13,24 @@ model User {
 }
 
 model Recipe {
-  id          Int          @id
+  id          Int          @id @default(autoincrement())
   name        String
   prepTime    String
   cookTime    String
+  serves      Int
   ingredients Ingredient[]
+  method      Step[]
+}
+
+model Step {
+  id       Int     @id @default(autoincrement())
+  method   String
+  recipeId Int
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
 }
 
 model IngredientAmount {
-  id           Int          @id
+  id           Int          @id @default(autoincrement())
   amount       String
   recipeId     Int
   ingredientId Int
@@ -29,7 +38,7 @@ model IngredientAmount {
 }
 
 model Ingredient {
-  id                 Int              @id
+  id                 Int              @id @default(autoincrement())
   recipeId           Int
   amount             IngredientAmount @relation(fields: [ingredientAmountId], references: [id])
   name               String
