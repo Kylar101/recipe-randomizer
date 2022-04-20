@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { NewRecipe, Recipe, UpdatedRecipe } from '../models/recipe.model';
 import { PrismaService } from '../../services/prisma.service';
 
@@ -36,5 +36,15 @@ export class RecipeResolver {
   @Mutation(() => Recipe)
   async deleteRecipe(@Args('id') id: number) {
     return this.prisma.recipe.delete({ where: { id }});
+  }
+
+  @ResolveField()
+  async Steps(@Parent() { id }: Recipe) {
+    return this.prisma.step.findMany({ where: { recipeId: id }});
+  }
+
+  @ResolveField()
+  async Ingredients(@Parent() { id }: Recipe) {
+    return this.prisma.ingredient.findMany({ where: { recipeId: id }});
   }
 }

@@ -1,5 +1,7 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { MaxLength } from "class-validator";
+import { Ingredient } from "./ingredient.model";
+import { Step } from "./step.model";
 
 @ObjectType({ description: 'recipe'})
 export class Recipe {
@@ -17,6 +19,12 @@ export class Recipe {
 
   @Field()
   serves: number;
+
+  @Field(() => [Step], { nullable: 'items' })
+  Steps: Step[];
+
+  @Field(() => [Ingredient], { nullable: 'items' })
+  Ingredients: Ingredient[];
 }
 
 @InputType()

@@ -29,19 +29,10 @@ model Step {
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
 }
 
-model IngredientAmount {
-  id           Int          @id @default(autoincrement())
-  amount       String
-  recipeId     Int
-  ingredientId Int
-  Ingredient   Ingredient[]
-}
-
 model Ingredient {
   id                 Int              @id @default(autoincrement())
   recipeId           Int
-  amount             IngredientAmount @relation(fields: [ingredientAmountId], references: [id])
+  amount             String
   name               String
   Recipe             Recipe           @relation(fields: [recipeId], references: [id])
-  ingredientAmountId Int
 }
